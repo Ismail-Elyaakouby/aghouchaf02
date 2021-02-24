@@ -54,7 +54,6 @@ environment {
                 app.push("latest")
             }
         }
-    }
     
     }
     catch (err) {
@@ -64,7 +63,6 @@ environment {
         sh 'echo faiiiiiiled.//'
         throw err
     }
-
     post {
         // Clean after build
         always {
@@ -75,5 +73,5 @@ environment {
                     patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
                                [pattern: '.propsfile', type: 'EXCLUDE']])
         }
-
+    }
 }
