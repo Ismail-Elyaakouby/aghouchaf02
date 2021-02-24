@@ -38,9 +38,9 @@ environment {
             checkout scm
         }
 
-        stage('Build image') {
-            app = docker.build("88915020/hellonode")
-        }
+       // stage('Build image') {
+       //     app = docker.build("88915020/hellonode")
+        //}
 
         stage('Test image') {
             app.inside {
