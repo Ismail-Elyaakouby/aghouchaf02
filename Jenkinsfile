@@ -37,11 +37,6 @@ environment {
         stage('Clone repository') {
             checkout scm
         }
-        post {
-            always {
-                cleanWs()
-            }
-        }
      
     }
     catch (err) {
