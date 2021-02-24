@@ -54,9 +54,8 @@ environment {
                 app.push("latest")
             }
         }
-    }
-
-     post {
+        
+    post {
         // Clean after build
         always {
             cleanWs(cleanWhenNotBuilt: false,
@@ -67,8 +66,8 @@ environment {
                                [pattern: '.propsfile', type: 'EXCLUDE']])
         }
     }
- 
- 
+    
+    }
     catch (err) {
 
         currentBuild.result = "FAILURE"
