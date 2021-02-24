@@ -54,11 +54,7 @@ environment {
                 app.push("latest")
             }
         }
-        post {
-           always {
-               cleanWs()
-           }
-        }
+
     }
     catch (err) {
 
