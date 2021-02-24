@@ -1,1 +1,1 @@
-java -jar /target/hello-world-war-1.0.6.war
+java -jar /target/smail-0.0.1-SNAPSHOT.war
