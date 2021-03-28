@@ -22,11 +22,15 @@ pipeline {
 		}
 
 
-	stage("rollback deployment") {
+	stage("K8S") {
 	    steps {
-	           withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'config')]) {
-	           sh 'kubectl get nodes'
-	           }
+	           //withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'config')]) {
+	           //sh 'kubectl get nodes'
+	           //}
+		    withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
+		     sh 'use $KUBECONFIG' // environment variable; not pipeline variable
+		     sh 'kubectl get nodes'
+		   }
 	        }
 	    }
 	}
