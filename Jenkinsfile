@@ -27,7 +27,7 @@ pipeline {
 	           //withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'config')]) {
 	           //sh 'kubectl get nodes'
 	           //}
-		    withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
+		    withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG1', variable: 'KUBECONFIG')]) {
 		     sh 'kubectl get nodes'
 		   }
 	        }
