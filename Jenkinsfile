@@ -1,87 +1,40 @@
-#!groovy
+def BRANCHCURRENT = 'master'
 
-node('slave-maven-01') {
+pipeline {
 
- def app
+	agent slave-maven-01
 
- 
-environment {
-    registry = "https://hub.docker.com/88915020"
-    registryCredential = '88915020'
-}
-    currentBuild.result = "SUCCESS"
+    
+   stages {
+		stage ('Compile Stage') {
+			when {
+				expression {
+					return BRANCHCURRENT == 'master';
+				}
+			}
+			steps {
+				script {
+					try {
+						sh 'echo "clean compile done.."'
+					} catch (error) {
+						currentBuild.result = 'FAILURE'
+					}
+				}
+			}
+		}
 
-    try {
 
-       stage('Checkout'){
-          checkout scm
-       }
-
-       stage('Test'){
-         env.NODE_ENV = "test"
-         print "Environment will be : ${env.NODE_ENV}"
-         sh 'mvn -B -DskipTests clean install -Dmaven.clean.failOnError=false'
-       }
-
-       stage('Build Docker'){
-            sh 'docker build -f Dockerfile -t hellowordv01:$BUILD_NUMBER .'
-       }
-        
-       stage('Deploy'){
-         echo 'Push to Repo'
-        //sh './dockerPushToRepo.sh'
-
-       }
-       
-  
-        stage('Clone repository') {
-            checkout scm
-        }
-
-        stage('Build image') {
-            ///app = docker.build("88915020/hellonode")
-        }
-
-        stage('Test image') {
-            app.inside {
-                sh 'echo "Tests passed"'
-            }
-        }
-
-        stage('Push image') {
-            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                ///app.push("${env.BUILD_NUMBER}")
-                ///app.push("latest")
-            }
-        }
-     ///////////////
 	stage("rollback deployment") {
-		//when {
-		//	expression { params.action == 'rollback' }
-		//}
 	    steps {
 	           withCredentials([kubeconfigFile(credentialsId: 'kubernetes_config', variable: 'KUBECONFIG')]) {
 	           sh """
 	                kubectl get nodes
-		      """
+			   """
 	           }
 	        }
 	    }
 	}
-     
-     	                    //withCredentials([kubeconfigFile(credentialsId: 'kubernetes_config', variable: 'KUBECONFIG')]) {
-	                        //sh 'kubectl create -f deployment.yaml'
-	                        //}
 
-     //////////////
-    }
- 
-    catch (err) {
-
-        currentBuild.result = "FAILURE"
-
-        sh 'echo faiiiiiiled.//'
-        throw err
-    }
-
+	
+	}
 }
