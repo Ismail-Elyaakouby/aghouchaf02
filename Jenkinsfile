@@ -24,7 +24,7 @@ pipeline {
 
 	stage("rollback deployment") {
 	    steps {
-	           withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
+	           withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'config')]) {
 	           sh """
 	                kubectl get nodes
 			   """
