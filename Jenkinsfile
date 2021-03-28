@@ -2,7 +2,7 @@ def BRANCHCURRENT = 'master'
 
 pipeline {
 
-	agent slave-maven-01
+	agent 'slave-maven-01'
 
     
    stages {
