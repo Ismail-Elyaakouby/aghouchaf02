@@ -66,7 +66,7 @@ environment {
                             withCredentials([file(credentialsId: 'secret', variable: 'KUBECONFIG')]) {
                             // change context with related namespace
                             // sh "kubectl config set-context $(kubectl config current-context) --namespace=${namespace}"
-
+                             sh 'kubectl get nodes'
                             //Deploy with Helm
                             // echo "Deploying"
                             // sh "helm upgrade --install road-dashboard -f values.${ENV}.yaml --set tag=$TAG --namespace ${namespace}"    
@@ -75,6 +75,11 @@ environment {
                 }
             }
         }
+     
+     	                    //withCredentials([kubeconfigFile(credentialsId: 'kubernetes_config', variable: 'KUBECONFIG')]) {
+	                        //sh 'kubectl create -f deployment.yaml'
+	                        //}
+
      //////////////
     }
  
