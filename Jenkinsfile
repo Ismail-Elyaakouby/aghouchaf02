@@ -28,7 +28,6 @@ pipeline {
 	           //sh 'kubectl get nodes'
 	           //}
 		    withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
-		     sh 'use $KUBECONFIG' // environment variable; not pipeline variable
 		     sh 'kubectl get nodes'
 		   }
 	        }
