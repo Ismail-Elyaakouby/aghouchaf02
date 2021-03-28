@@ -1,9 +1,7 @@
 def BRANCHCURRENT = 'master'
 
 pipeline {
-
-	agent 'slave-maven-01'
-
+	agent any
     
    stages {
 		stage ('Compile Stage') {
