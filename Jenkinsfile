@@ -56,7 +56,6 @@ environment {
         }
      ///////////////
         stage('k8S') {
-            script{
                 steps{
                     if(env.GIT_BRANCH.contains("master")){
 
@@ -73,7 +72,6 @@ environment {
                         }   
                     }
                 }
-            }
         }
      
      	                    //withCredentials([kubeconfigFile(credentialsId: 'kubernetes_config', variable: 'KUBECONFIG')]) {
