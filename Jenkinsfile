@@ -54,6 +54,28 @@ environment {
                 app.push("latest")
             }
         }
+     ///////////////
+        stage('k8S') {
+            script{
+                steps{
+                    if(env.GIT_BRANCH.contains("master")){
+
+                            def namespace="default"
+                            def ENV="development"
+
+                            withCredentials([file(credentialsId: 'secret', variable: 'KUBECONFIG')]) {
+                            // change context with related namespace
+                            // sh "kubectl config set-context $(kubectl config current-context) --namespace=${namespace}"
+
+                            //Deploy with Helm
+                            // echo "Deploying"
+                            // sh "helm upgrade --install road-dashboard -f values.${ENV}.yaml --set tag=$TAG --namespace ${namespace}"    
+                        }   
+                    }
+                }
+            }
+        }
+     //////////////
     }
  
     catch (err) {
