@@ -14,23 +14,13 @@ pipeline {
 				script {
 					try {
 						sh 'echo "clean compile done.."'
+						sh 'mvn -B -DskipTests clean install -Dmaven.clean.failOnError=false'
+						
 					} catch (error) {
 						currentBuild.result = 'FAILURE'
 					}
 				}
 			}
 		}
-
-
-	stage("K8S") {
-	    steps {
-	           //withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'config')]) {
-	           //sh 'kubectl get nodes'
-	           //}
-		    withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
-		     sh 'kubectl get nodes'
-		   }
-	        }
-	    }
 	}
 }
